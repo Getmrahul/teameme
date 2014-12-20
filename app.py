@@ -14,7 +14,7 @@ app.secret_key = os.urandom(25)
 #Routes
 @app.route('/')
 def index():
-    return 'login'
+    return render_template('index.html')
 
 
 
