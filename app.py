@@ -124,12 +124,12 @@ def feed():
                 matches = re.findall(r'\<(.+?)\>',text)
                 tag = matches[0].split("|")
                 code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
-                text = text.replace('<'+matches[0]+'>','"'+code+'"')
+                text = text.replace('<'+matches[0]+'>',code)
                 pretext = data["messages"][j]["attachments"][0]["fallback"]
                 matches = re.findall(r'\<(.+?)\>',pretext)
                 tag = matches[0].split("|")
                 code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
-                pretext = pretext.replace('<'+matches[0]+'>','"'+code+'"')
+                pretext = pretext.replace('<'+matches[0]+'>',code)
                 feed.append({"ts":float(ts), "text": text, "pretext": pretext})
             j = j + 1
         i = i + 1
