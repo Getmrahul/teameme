@@ -28,10 +28,15 @@ def auth():
         response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
         data = json.load(response)
         auth_code = data["access_token"].encode('utf-8')
-        return auth_code
-        resp = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code).read()
-        sp = resp.split(',')
+        response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
+        data = json.load(response)
+        tid = data["team_id"]
+        uid = data["user_id"]
         records = db_obj.connect(tid, uid)
+        if not records:
+            return render_template('join.html', token = auth_code)
+        else:
+            return "Existing user"
     except Exception as exp:
         return exp
 
