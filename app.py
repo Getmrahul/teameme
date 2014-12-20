@@ -115,15 +115,22 @@ def feed():
         tmp = ch[i].split('-_-')
         response = urllib2.urlopen('https://slack.com/api/channels.history?token='+session["auth"]+'&channel='+tmp[0])
         data = json.load(response)
-        content = data["messages"]
-        for c in content:
-            ts = c["ts"]
-            text = c["attachments"][0]["text"]
-            pretext = c["attachments"][0]["pretext"]
-            feed.append({"ts":float(ts), "text": text, "pretext": pretext})
+        j = 0
+        while j < len(data["messages"]):
+            if data["messages"][j]["text"] == "":
+                ts = data["messages"][j]["ts"]
+                text = data["messages"][j]["attachments"][0]["text"]
+                pretext = data["messages"][j]["attachments"][0]["fallback"]
+                feed.append({"ts":float(ts), "text": text, "pretext": pretext})
+            j = j + 1
         i = i + 1
+    if not feed:
+        data = {"status":0,"data":"Failed!"}
+        js = json.dumps(data)
+        resp = Response(js, status = 200, mimetype = 'application/json')
+        return resp
     nfeed = sorted(feed, key=itemgetter('ts'), reverse=True)
-    js = json.dumps(nfeed)
+    data = {"status":1,"data":nfeed}
     js = json.dumps(data)
     resp = Response(js, status = 200, mimetype = 'application/json')
     return resp

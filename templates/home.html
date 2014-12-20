@@ -337,7 +337,10 @@
         $('#timeline_ul').html('<div class="loader">Loading...</div><center><p>Checking what people are doing!</p></center>');
         var ch = $('#cl').val();
         $.getJSON( "/feed?ch="+ch, function(response) {
-            
+            if (response.status==0)
+            {
+                $('#timeline_ul').html("<p>Seems like people are in holiday!");
+            }
         });
     });
     </script>
