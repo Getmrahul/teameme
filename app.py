@@ -9,6 +9,7 @@ import urllib2
 import json
 from operator import itemgetter
 import db
+import re
 
 #App Settings
 app = Flask(__name__)
@@ -120,6 +121,10 @@ def feed():
             if data["messages"][j]["text"] == "":
                 ts = data["messages"][j]["ts"]
                 text = data["messages"][j]["attachments"][0]["text"]
+                matches = re.findall(r'\<(.+?)\>',text)
+                tag = matches[0].split("|")
+                code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
+                text = text.replace('<'+matches[0]+'>','"'+code+'"')
                 pretext = data["messages"][j]["attachments"][0]["fallback"]
                 feed.append({"ts":float(ts), "text": text, "pretext": pretext})
             j = j + 1
