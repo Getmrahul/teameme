@@ -22,7 +22,7 @@ def index():
 def auth():
     try:
         code = request.args.get('code')
-        resp = json.load(urllib2.urlopen("https://slack.com/api/oauth.access?"+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec).read())
+        resp = urllib2.urlopen("https://slack.com/api/oauth.access?"+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec).read()
         return resp
 
     except Exception as exp:
