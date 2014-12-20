@@ -22,10 +22,11 @@ def index():
 def auth():
     try:
         code = request.args.get('code')
-        code = Markup(code).striptags()
-        url = 'https://slack.com/api/oauth.access?'+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec
-        resp = urllib2.urlopen(url)
-        return resp
+        resp = urllib2.urlopen("https://slack.com/api/oauth.access?"+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec).read()
+        js = resp
+        sp = js.split('&')
+        token = sp[0].split('=')
+        return token[1]
 
     except Exception as exp:
         return exp
