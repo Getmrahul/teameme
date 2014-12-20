@@ -21,12 +21,16 @@ db_obj = db.db()
 def index():
     return render_template('index.html')
 
+@app.route('/problem')
+def error():
+    return render_template('error.html')
+
 @app.route('/auth')
 def auth():
     code = request.args.get('code')
     response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
     data = json.load(response)
-    auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#
+    auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
     response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
     data = json.load(response)
     tid = data["team_id"]
@@ -46,7 +50,7 @@ def auth():
             else:
                 channels = channels + '|m|'+ data["channels"][i]["id"]+'-_-'+data["channels"][i]["name"]
             i = i+1
-        return render_template('join.html', tid = tid, uid = uid, turl = turl, tname = tname, uname = uname, channels = channels)
+        return render_template('join.html', tid = tid, uid = uid, turl = turl, tname = tname, uname = uname, channels = channels, auth = auth_code)
     else:
         return "Existing user"
 
@@ -58,14 +62,28 @@ def create():
     turl = request.form["turl"]
     uname = request.form["uname"]
     chlist = request.form.getlist("chlist")
+    auth = request.form["auth"]
     lists = ''
-    while (i<len(chlist)):
+    for ch in chlist:
         if lists == '':
-            lists = lists + chlist[i]
+            lists = lists + ch
         else:
-            lists = lists + '|m|' + chlist[i]
-        i = i + 1
-    return lists
+            lists = lists + '|m|' + ch
+    check = db_obj.create(tid, uid, tname, turl, uname, lists)
+    if check == 0:
+        return redirect(url_for('error'))
+    else:
+        session["auth"] = auth
+        session["tid"] = tid
+        session["uid"] = uid
+        session["turl"] = turl
+        session["uname"] = uname
+        session["tname"] = tname
+        return redirect(url_for('home'))
+
+@app.route('/home')
+def home():
+    return session["tname"]
 
 #Flask Server
 if __name__ == "__main__":
