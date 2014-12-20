@@ -22,7 +22,7 @@ def auth():
     try:
         code = request.args.get('code')
         code = Markup(code).striptags()
-        url = 'https://slack.com/api/oauth.access?'+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec+'scope=read,email'
+        url = 'https://slack.com/api/oauth.access?'+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec
         resp = urllib2.urlopen(url)
         return resp
 
