@@ -5,6 +5,7 @@ import os
 from flask import Flask, request, render_template, json, Response, session, redirect, url_for, Markup
 from werkzeug import secure_filename
 import urllib2
+import json
 import db
 
 #App Settings
@@ -24,15 +25,13 @@ def index():
 def auth():
     try:
         code = request.args.get('code')
-        resp = urllib2.urlopen("https://slack.com/api/oauth.access?"+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec).read()
+        response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
+        data = json.load(response)
+        auth_code = data["access_token"].encode('utf-8')
+        return auth_code
+        resp = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code).read()
         sp = resp.split(',')
-        token = sp[1].split(':')
-        auth_code = token[1].replace('"', '')
-        resp = json.load(urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code))
-        return resp
         records = db_obj.connect(tid, uid)
-
-
     except Exception as exp:
         return exp
 
