@@ -132,7 +132,10 @@ def feed():
                 k = 0
                 while k < len(matches):
                     tag = matches[k].split("|")
-                    code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
+                    try:
+                        code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
+                    except Exception:
+                        code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[0]+"</a>"
                     text = text.replace('<'+matches[k]+'>',code)
                     k = k + 1
                 pretext = data["messages"][j]["attachments"][0]["fallback"]
@@ -140,7 +143,10 @@ def feed():
                 k = 0
                 while k < len(matches):
                     tag = matches[k].split("|")
-                    code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
+                    try:
+                        code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
+                    except Exception:
+                        code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[0]+"</a>"
                     pretext = pretext.replace('<'+matches[k]+'>',code)
                     k = k + 1
                 feed.append({"ts":float(ts), "text": text, "pretext": pretext, "cn": cn, "fcn": tmp[1].capitalize(), "color": color})
