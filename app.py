@@ -69,10 +69,9 @@ def create():
             lists = lists + ch
         else:
             lists = lists + '|m|' + ch
-    check = db_obj.create(tid, uid, tname, turl, uname, lists)
-    if check == 0:
-        return redirect(url_for('error'))
-    else:
+    try:
+        db_obj = db.db()
+        db_obj.signup(tid, uid, tname, turl, uname, lists)
         session["auth"] = auth
         session["tid"] = tid
         session["uid"] = uid
@@ -80,6 +79,8 @@ def create():
         session["uname"] = uname
         session["tname"] = tname
         return redirect(url_for('home'))
+    except Exception:
+        return "Error"
 
 @app.route('/home')
 def home():

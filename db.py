@@ -30,13 +30,10 @@ class db(object):
             row.append(r)
         con.close()
         return row
-    def create(self, tid, uid, tname, turl, uname, lists):
-        con = connect()
-        c = con.cursor()
-        q = "insert into slack_list (tid, tname, uid, uname, turl, channels) values ('%s', '%s', '%s', '%s', '%s', '%s')" % (tid, tname, uid, uname, turl, lists)
-        try:
-            c.execute(q)
-            return 1
-        except Exception:
-            return 0
-        con.close()
+    def signup(self, tid, uid, tname, turl, uname, lists):
+		q = "insert into slack_list (tid, uid, tname, turl, uname, channels) values('%s','%s','%s','%s','%s', '%s')" % (tid, uid, tname, turl, uname, lists)
+		con = connect()
+		c = con.cursor()
+		c.execute(q)
+		con.commit()
+		con.close()
