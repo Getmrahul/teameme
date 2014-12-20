@@ -7,3 +7,4 @@ Flask-SQLAlchemy==0.9
 validate_email==1.2
 pyDNS==2.3.6
 Pillow==2.4
+py-pretty==1.0

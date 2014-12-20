@@ -10,6 +10,8 @@ import json
 from operator import itemgetter
 import db
 import re
+from datetime import datetime
+import pretty
 
 #App Settings
 app = Flask(__name__)
@@ -127,6 +129,8 @@ def feed():
         while j < len(data["messages"]):
             if data["messages"][j]["text"] == "":
                 ts = data["messages"][j]["ts"]
+                dt = datetime.utcfromtimestamp(float(ts))
+                timeinfo = pretty.date(dt)
                 text = data["messages"][j]["attachments"][0]["text"]
                 matches = re.findall(r'\<(.+?)\>',text)
                 k = 0
@@ -149,7 +153,7 @@ def feed():
                         code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[0]+"</a>"
                     pretext = pretext.replace('<'+matches[k]+'>',code)
                     k = k + 1
-                feed.append({"ts":float(ts), "text": text, "pretext": pretext, "cn": cn, "fcn": tmp[1].capitalize(), "color": color})
+                feed.append({"ts":float(ts), "text": text, "pretext": pretext, "cn": cn, "fcn": tmp[1].capitalize(), "color": color, "tsd":timeinfo})
             j = j + 1
         i = i + 1
     if not feed:

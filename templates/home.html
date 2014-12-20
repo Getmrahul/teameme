@@ -353,21 +353,21 @@
                     if (i%2==0)
                     {
                         if(data[i]["text"] != data[i]["pretext"]){
-                        tl = tl + '<li> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body" style="overflow:hidden;"> <p>'+data[i]["pretext"]+'</p> </div> </div> </li>';
+                        tl = tl + '<li> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body" style="overflow:hidden;"> <p>'+data[i]["pretext"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div> </div> </li>';
                         }
                         else
                         {
-                            tl = tl + '<li> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div></div> </li>';
+                            tl = tl + '<li> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div></div> </li>';
                         }
                     }
                     else
                     {
                         if(data[i]["text"] != data[i]["pretext"]){
-                            tl = tl + '<li class="timeline-inverted" > <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body" style="overflow:hidden;"> <p>'+data[i]["pretext"]+'</p> </div> </div> </li>';
+                            tl = tl + '<li class="timeline-inverted" > <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div> <div class="timeline-body" style="overflow:hidden;"> <p>'+data[i]["pretext"]+'</p> </div> </div> </li>';
                         }
                         else
                         {
-                            tl = tl + '<li class="timeline-inverted"> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div></div> </li>';
+                            tl = tl + '<li class="timeline-inverted"> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div></div> </li>';
                         }
                     }
                     i = i + 1;
