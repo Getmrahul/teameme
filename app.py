@@ -85,6 +85,11 @@ def create():
 def home():
     return session["tname"]
 
+@app.route('/logout')
+def logout():
+    app.secret_key = os.urandom(25)
+    return redirect(url_for('index'))
+
 #Flask Server
 if __name__ == "__main__":
     app.run(debug=True)
