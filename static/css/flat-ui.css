@@ -4448,8 +4448,8 @@ select[multiple].navbar-form .select2-search input[type="text"] {
   background-color: transparent;
   }
 .navbar-default .navbar-nav > .dropdown > a .caret {
-  border-top-color: #34495e;
-  border-bottom-color: #34495e;
+  border-top-color: white;
+  border-bottom-color: white;
   }
 .navbar-default .navbar-nav > .active > a .caret {
   border-top-color: #1abc9c;
@@ -4457,8 +4457,8 @@ select[multiple].navbar-form .select2-search input[type="text"] {
   }
 .navbar-default .navbar-nav > .dropdown > a:hover .caret,
 .navbar-default .navbar-nav > .dropdown > a:focus .caret {
-  border-top-color: #1abc9c;
-  border-bottom-color: #1abc9c;
+  border-top-color: #F3F4F5;
+  border-bottom-color: #F3F4F5;
   }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
