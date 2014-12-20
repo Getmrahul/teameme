@@ -36,7 +36,7 @@ def auth():
     code = request.args.get('code')
     response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
     data = json.load(response)
-    auth_code = 'xoxp-3259978903-3259978905-3263464205-9e2605'#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
+    auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
     response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
     data = json.load(response)
     tid = data["team_id"]
@@ -112,11 +112,16 @@ def feed():
     i = 0
     cl = []
     feed = []
+    colors = ['info', 'success', 'warning', '', 'danger']
     while i < len(ch):
         tmp = ch[i].split('-_-')
         response = urllib2.urlopen('https://slack.com/api/channels.history?token='+session["auth"]+'&channel='+tmp[0])
         cn = tmp[1][0]
         cn = cn.upper()
+        co_i = i
+        if co_i > len(colors):
+            co_i = co_i - len(colors)
+        color = colors[co_i]
         data = json.load(response)
         j = 0
         while j < len(data["messages"]):
@@ -138,7 +143,7 @@ def feed():
                     code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
                     pretext = pretext.replace('<'+matches[k]+'>',code)
                     k = k + 1
-                feed.append({"ts":float(ts), "text": text, "pretext": pretext, "cn": cn, "fcn": tmp[1].capitalize()})
+                feed.append({"ts":float(ts), "text": text, "pretext": pretext, "cn": cn, "fcn": tmp[1].capitalize(), "color": color})
             j = j + 1
         i = i + 1
     if not feed:
