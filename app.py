@@ -34,11 +34,12 @@ def auth():
     code = request.args.get('code')
     response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
     data = json.load(response)
-    auth_code = 'xoxp-3259978903-3259978905-3263464205-9e2605'#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
+    auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
     response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
     data = json.load(response)
     tid = data["team_id"]
     uid = data["user_id"]
+    db_obj = db.db()
     records = db_obj.connect(tid, uid)
     if not records:
         response = urllib2.urlopen('https://slack.com/api/channels.list?token='+auth_code)
@@ -100,11 +101,17 @@ def create():
 def home():
     if 'auth' not in session:
         return redirect(url_for('index'))
-    return render_template('home.html', tname = session["tname"])
+    return render_template('home.html')
 
 @app.route('/logout')
 def logout():
-    app.secret_key = os.urandom(25)
+    session.pop('auth', None)
+    session.pop('tid', None)
+    session.pop('turl', None)
+    session.pop('tname', None)
+    session.pop('channels', None)
+    session.pop('uid', None)
+    session.pop('uname', None)
     return redirect(url_for('index'))
 
 #Flask Server
