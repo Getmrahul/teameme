@@ -23,7 +23,9 @@ def auth():
     try:
         code = request.args.get('code')
         resp = urllib2.urlopen("https://slack.com/api/oauth.access?"+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec).read()
-        return resp
+        sp = resp.split(',')
+        token = sp[1].split(':')
+        return token[1]
 
     except Exception as exp:
         return exp
