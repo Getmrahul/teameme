@@ -36,7 +36,7 @@ def auth():
     code = request.args.get('code')
     response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
     data = json.load(response)
-    auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
+    auth_code = 'xoxp-3259978903-3259978905-3263464205-9e2605'#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
     response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
     data = json.load(response)
     tid = data["team_id"]
@@ -63,8 +63,8 @@ def auth():
         session["tid"] = records[1]
         session["uid"] = records[3]
         session["turl"] = records[5]
-        session["uname"] = records[4]
-        session["tname"] = records[2]
+        session["uname"] = records[4].capitalize()
+        session["tname"] = records[2].capitalize()
         session["channels"] = records[6]
         return redirect(url_for('home'))
 
@@ -92,8 +92,8 @@ def create():
         session["tid"] = tid
         session["uid"] = uid
         session["turl"] = turl
-        session["uname"] = uname
-        session["tname"] = tname
+        session["uname"] = uname.capitalize()
+        session["tname"] = tname.capitalize()
         session["channels"] = lists
         return redirect(url_for('home'))
     except Exception:
@@ -115,6 +115,8 @@ def feed():
     while i < len(ch):
         tmp = ch[i].split('-_-')
         response = urllib2.urlopen('https://slack.com/api/channels.history?token='+session["auth"]+'&channel='+tmp[0])
+        cn = tmp[1][0]
+        cn = cn.upper()
         data = json.load(response)
         j = 0
         while j < len(data["messages"]):
@@ -122,15 +124,21 @@ def feed():
                 ts = data["messages"][j]["ts"]
                 text = data["messages"][j]["attachments"][0]["text"]
                 matches = re.findall(r'\<(.+?)\>',text)
-                tag = matches[0].split("|")
-                code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
-                text = text.replace('<'+matches[0]+'>',code)
+                k = 0
+                while k < len(matches):
+                    tag = matches[k].split("|")
+                    code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
+                    text = text.replace('<'+matches[k]+'>',code)
+                    k = k + 1
                 pretext = data["messages"][j]["attachments"][0]["fallback"]
                 matches = re.findall(r'\<(.+?)\>',pretext)
-                tag = matches[0].split("|")
-                code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
-                pretext = pretext.replace('<'+matches[0]+'>',code)
-                feed.append({"ts":float(ts), "text": text, "pretext": pretext})
+                k = 0
+                while k < len(matches):
+                    tag = matches[k].split("|")
+                    code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
+                    pretext = pretext.replace('<'+matches[k]+'>',code)
+                    k = k + 1
+                feed.append({"ts":float(ts), "text": text, "pretext": pretext, "cn": cn, "fcn": tmp[1].capitalize()})
             j = j + 1
         i = i + 1
     if not feed:

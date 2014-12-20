@@ -346,20 +346,35 @@
             {
                 var data = response.data;
                 var i = 0;
-                for (d in data)
+                console.log(data[0]["pretext"]);
+                console.log(data[0][1]);
+                while (i < data.length)
                 {
                     if (i%2==0)
                     {
-                        tl = tl + '<li> <div class="timeline-badge danger">C</div> <div class="timeline-panel"> <div class="timeline-heading"> <h4 class="timeline-title">'+d[1]+'</h4> </div> <div class="timeline-body"> <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p> </div> </div> </li>';
+                        if(data[i]["text"] != data[i]["pretext"]){
+                        tl = tl + '<li> <div class="timeline-badge danger" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body"> <p>'+data[i]["pretext"]+'</p> </div> </div> </li>';
+                        }
+                        else
+                        {
+                            tl = tl + '<li> <div class="timeline-badge danger" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div></div> </li>';
+                        }
                     }
                     else
                     {
-                        tl = tl + '<li class="timeline-inverted"> <div class="timeline-badge danger">C</div> <div class="timeline-panel"> <div class="timeline-heading"> <h4 class="timeline-title">'+d[1]+'</h4> </div> <div class="timeline-body"> <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.</p> </div> </div> </li>';
+                        if(data[i]["text"] != data[i]["pretext"]){
+                            tl = tl + '<li class="timeline-inverted" > <div class="timeline-badge danger" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body"> <p>'+data[i]["pretext"]+'</p> </div> </div> </li>';
+                        }
+                        else
+                        {
+                            tl = tl + '<li class="timeline-inverted"> <div class="timeline-badge danger" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div></div> </li>';
+                        }
                     }
                     i = i + 1;
                 }
                 tl = "<ul class=\"timeline\">" + tl + "</ul>";
                 $('#timeline_ul').html(tl);
+                $('[data-toggle="tooltip"]').tooltip();
             }
         });
     });
