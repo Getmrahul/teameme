@@ -56,7 +56,14 @@ def auth():
             i = i+1
         return render_template('join.html', tid = tid, uid = uid, turl = turl, tname = tname, uname = uname, channels = channels, auth = auth_code)
     else:
-        return "Existing user"
+        session["auth"] = auth_code
+        session["tid"] = records[1]
+        session["uid"] = records[3]
+        session["turl"] = records[5]
+        session["uname"] = records[4]
+        session["tname"] = records[2]
+        session["channels"] = records[6]
+        return redirect(url_for('home'))
 
 @app.route('/create', methods = ["POST"])
 def create():
@@ -84,6 +91,7 @@ def create():
         session["turl"] = turl
         session["uname"] = uname
         session["tname"] = tname
+        session["channels"] = lists
         return redirect(url_for('home'))
     except Exception:
         return "Error"
