@@ -22,12 +22,12 @@ def auth():
     try:
         code = request.args.get('code')
         code = Markup(code).striptags()
-        url = 'https://slack.com/api/oauth.access?'+'code='+code+'&client_id=3111086527.3259178475&client_secret=fd3641ce49e6e2fa94a0bffafd3b57ad'
-        resp = json.load(urllib2.urlopen(url))
+        url = 'https://slack.com/api/oauth.access?'+'code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec+'scope=read,email'
+        resp = urllib2.urlopen(url)
         return resp
 
     except Exception as exp:
-        return render_template('error.html')
+        return exp
 
 
 
