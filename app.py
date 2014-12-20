@@ -19,6 +19,8 @@ db_obj = db.db()
 #Routes
 @app.route('/')
 def index():
+    if 'auth' in session:
+        return redirect(url_for('home'))
     return render_template('index.html')
 
 @app.route('/problem')
@@ -27,6 +29,8 @@ def error():
 
 @app.route('/auth')
 def auth():
+    if 'auth' in session:
+        return redirect(url_for('home'))
     code = request.args.get('code')
     response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
     data = json.load(response)
@@ -56,6 +60,8 @@ def auth():
 
 @app.route('/create', methods = ["POST"])
 def create():
+    if 'auth' in session:
+        return redirect(url_for('home'))
     tid = request.form["tid"]
     uid = request.form["uid"]
     tname = request.form["tname"]
@@ -84,7 +90,8 @@ def create():
 
 @app.route('/home')
 def home():
-    return session["tname"]
+    if 'auth' not in session:
+        return redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
