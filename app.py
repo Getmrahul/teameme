@@ -100,6 +100,7 @@ def create():
 def home():
     if 'auth' not in session:
         return redirect(url_for('index'))
+    return session["uname"]
 
 @app.route('/logout')
 def logout():
