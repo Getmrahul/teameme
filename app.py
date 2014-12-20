@@ -26,7 +26,7 @@ def auth():
     code = request.args.get('code')
     response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
     data = json.load(response)
-    auth_code = 'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
+    auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#
     response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
     data = json.load(response)
     tid = data["team_id"]
@@ -52,8 +52,20 @@ def auth():
 
 @app.route('/create', methods = ["POST"])
 def create():
-    return "Work"
-
+    tid = request.form["tid"]
+    uid = request.form["uid"]
+    tname = request.form["tname"]
+    turl = request.form["turl"]
+    uname = request.form["uname"]
+    chlist = request.form.getlist("chlist")
+    lists = ''
+    while (i<len(chlist)):
+        if lists == '':
+            lists = lists + chlist[i]
+        else:
+            lists = lists + '|m|' + chlist[i]
+        i = i + 1
+    return lists
 
 #Flask Server
 if __name__ == "__main__":
