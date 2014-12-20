@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/animate.css">
 
     <link rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="/static/lib/sweet-alert.css">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
@@ -31,7 +32,7 @@
   <body>
     <!-- loader -->
     <div class="load">
-        <div class="load_cont"><center><div class="contener_general"> <div class="contener_mixte"><div class="ballcolor ball_1">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_2">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_3">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_4">&nbsp;</div></div> </div><div style="display:none;" id="upload-greet">Signing in</div></center></div>
+        <div class="load_cont"><center><div class="contener_general"> <div class="contener_mixte"><div class="ballcolor ball_1">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_2">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_3">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_4">&nbsp;</div></div> </div></center></div>
     </div>
 
     <nav class="navbar navbar-default navbar-fixed-top " style="box-shadow: 0 3px 2px -2px rgba(8, 8, 8, 0.3);" id="anim_nav" role="navigation">
@@ -43,8 +44,8 @@
                 <a class="navbar-brand" style="color:white;font-family: 'Raleway', sans-serif;" href="#">TeaMem</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-01">
-                <ul class="nav navbar-nav">
-                    <li class="active" style="color:white"><a href="#fakelink">Join</a></li>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active" ><a href="#" style="color:white">Join</a></li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div>
@@ -52,83 +53,87 @@
 
     <div class="container">
         <div class="row">
-            <center><h4 style="font-family: 'Raleway', sans-serif;">Create Account</h4></center>
+            <center><h4 style="font-family: 'Raleway', sans-serif;">Channels</h4></center>
         </div>
+        <form class="form-inline" role="form" method="post" action="/create" onsubmit="return vd()">
         <div class="row">
             <p class="lead" style="font-size:24px; font-wight:100;">Pick the channels you want follow<hr></p>
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <form class="form-inline" role="form">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <label class="checkbox" for="checkbox1">
-                                <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                Checkbox
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <label class="checkbox" for="checkbox1">
-                                <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                Checkbox
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <label class="checkbox" for="checkbox1">
-                                <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                Checkbox
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <label class="checkbox" for="checkbox1">
-                                <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                Checkbox
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <label class="checkbox" for="checkbox1">
-                                <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                Checkbox
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <label class="checkbox" for="checkbox1">
-                                <input type="checkbox" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox"><span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-                                Checkbox
-                            </label>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-1"></div>
-        </dvi>
-    </div>
-    <!-- /.container -->
 
-    <input type="hidden" name="tt" value="{{token}}" />
+            <div class="col-md-12">
+                <br>
+                    <input type="hidden" name="tid" value="{{tid}}">
+                    <input type="hidden" name="tname" value="{{tname}}">
+                    <input type="hidden" name="turl" value="{{turl}}">
+                    <input type="hidden" name="uid" value="{{uid}}">
+                    <input type="hidden" name="uname" value="{{uname}}">
+                    <center><div id="checkb">
+
+                    </div></center>
+                    <br><br>
+                    <input type="hidden" id="s" name="s" value="">
+            </div>
+
+        </div>
+        <div class="row"><center><button class="btn btn-embossed btn-primary btn-wide">Join</button></center></div>
+        </form>
+    </div>
+
+    <!-- /.container -->
+    <div id="ch" data-c="{{channels}}">
     <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
     <script src="/static/js/vendor/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/static/js/vendor/video.js"></script>
     <script src="/static/js/flat-ui.min.js"></script>
+    <script src="/static/lib/sweet-alert.min.js"></script>
     <script>
     $(window).load(function() {
+        var data = $('#ch').data("c");
+        var fa = data.split("|m|");
+        var i = 0;
+        data = '';
+        while (i<fa.length)
+        {
+            var general = fa[i];
+            var tmp = general.split("-_-");
+            var name = tmp[1];
+            data = data + '<div class="form-group"> <div class="input-group"> <label class="checkbox" for="checkbox'+i+'"> <input type="checkbox" name="chlist" value="'+general+'" id="checkbox'+i+'" data-toggle="checkbox" class="custom-checkbox"><span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span> <font style="font-weight:bold;">'+name+'</font> </label> </div> </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+            i=i+1;
+        }
+        $('#s').val(i);
+        $('#checkb').html(data);
         $('.load').fadeOut("slow");
         $('#anim_nav').addClass('animated bounceInDown');
     });
 
+    function vd(d)
+{
+    var s = parseInt($('#s').val());
+    var i = 0;
+    var flag = 0;
+    while (i<s)
+    {
+        //var tmp = 'checkbox'+s.toString();
+        var boxes = $('input[name=chlist]:checked');
+        if (boxes.length>0)
+        {
+            flag = 1;
+            i = s;
+        }
+        i = i + 1;
+    }
+    if (flag==0){
+        swal({   title: "Error!",   text: "Select atleast one channel",   type: "error",   confirmButtonText: "Okay", confirmButtonColor: "#48c9b0" });
+        return false;
+    }
+    else{
+        return true; }
+    }
+
     $(document).ready(function(){
 
     });
+
     </script>
   </body>
 </html>

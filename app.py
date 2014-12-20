@@ -1,4 +1,5 @@
 #! usr/bin/python
+# -*- coding: utf-8 -*-
 
 #App Imports
 import os
@@ -32,10 +33,26 @@ def auth():
     uid = data["user_id"]
     records = db_obj.connect(tid, uid)
     if not records:
-        return render_template('join.html', token = auth_code)
+        response = urllib2.urlopen('https://slack.com/api/channels.list?token='+auth_code)
+        turl = data["url"]
+        tname = data["team"]
+        uname = data["user"]
+        data = json.load(response)
+        channels = ''
+        i = 0
+        while i < len(data["channels"]):
+            if channels == '':
+                channels = channels + data["channels"][i]["id"]+'-_-'+data["channels"][i]["name"]
+            else:
+                channels = channels + '|m|'+ data["channels"][i]["id"]+'-_-'+data["channels"][i]["name"]
+            i = i+1
+        return render_template('join.html', tid = tid, uid = uid, turl = turl, tname = tname, uname = uname, channels = channels)
     else:
         return "Existing user"
 
+@app.route('/create', methods = ["POST"])
+def create():
+    return "Work"
 
 
 #Flask Server
