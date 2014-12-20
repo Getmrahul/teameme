@@ -311,15 +311,16 @@
     </nav><!-- /navbar -->
 
     <div class="container">
-        <div class="page-header">
-            <h3 id="timeline">{{session['tname']}} Timeline</h3>
+        <div> <!-- class="page-header" -->
+            <h4 id="timeline">{{session['tname']}} Timeline</h4>
+            <hr>
         </div>
         <div  id="timeline_ul">
 
         </ul>
     </div>
     <!-- /.container -->
-
+    <input id="cl" type="hidden" value="{{session['channels']}}">
 
     <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
     <script src="/static/js/vendor/jquery.min.js"></script>
@@ -333,7 +334,11 @@
     });
 
     $(document).ready(function(){
-        $('#timeline_ul').html('<div class="loader">Loading...</div>');
+        $('#timeline_ul').html('<div class="loader">Loading...</div><center><p>Checking what people are doing!</p></center>');
+        var ch = $('#cl').val();
+        $.getJSON( "/feed?ch="+ch, function(response) {
+            
+        });
     });
     </script>
   </body>

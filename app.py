@@ -7,6 +7,7 @@ from flask import Flask, request, render_template, json, Response, session, redi
 from werkzeug import secure_filename
 import urllib2
 import json
+from operator import itemgetter
 import db
 
 #App Settings
@@ -34,7 +35,7 @@ def auth():
     code = request.args.get('code')
     response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
     data = json.load(response)
-    auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
+    auth_code = 'xoxp-3259978903-3259978905-3263464205-9e2605'#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
     response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
     data = json.load(response)
     tid = data["team_id"]
@@ -102,6 +103,30 @@ def home():
     if 'auth' not in session:
         return redirect(url_for('index'))
     return render_template('home.html')
+
+@app.route('/feed')
+def feed():
+    channels = request.args.get('ch')
+    ch = channels.split('|m|')
+    i = 0
+    cl = []
+    feed = []
+    while i < len(ch):
+        tmp = ch[i].split('-_-')
+        response = urllib2.urlopen('https://slack.com/api/channels.history?token='+session["auth"]+'&channel='+tmp[0])
+        data = json.load(response)
+        content = data["messages"]
+        for c in content:
+            ts = c["ts"]
+            text = c["attachments"][0]["text"]
+            pretext = c["attachments"][0]["pretext"]
+            feed.append({"ts":float(ts), "text": text, "pretext": pretext})
+        i = i + 1
+    nfeed = sorted(feed, key=itemgetter('ts'), reverse=True)
+    js = json.dumps(nfeed)
+    js = json.dumps(data)
+    resp = Response(js, status = 200, mimetype = 'application/json')
+    return resp
 
 @app.route('/logout')
 def logout():
