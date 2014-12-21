@@ -124,7 +124,7 @@
 
     <div class="container">
         <div class="row">
-            <center><h4>{{session["tname"]}} Members</h4><hr></center>
+            <center><h4 style="font-weight:300;">{{session["tname"]}} Members</h4><hr></center>
         </div>
 
         <div id="ml">
@@ -159,12 +159,12 @@
                 var tmp = data[i].split("-_-");
                 if (j>4)
                 {
-                    cont = cont + '</div><div class="row"><div class="col-md-3"> <div class="thumbnail wow zoomIn"> <img src="http://www.gravatar.com/avatar/'+tmp[2]+'?s=150" class="img-circle" alt="'+tmp[0]+'"> <div class="caption"> <center><h6>'+tmp[0]+'</h6> <p><small>'+tmp[1]+'</small></p></center> </div> </div> </div>';
+                    cont = cont + '</div><div class="row"><div class="col-md-3"> <div class="thumbnail wow zoomIn" style="font-weight:300;"> <img src="http://www.gravatar.com/avatar/'+tmp[2]+'?s=150" class="img-circle" alt="'+tmp[0]+'"> <div class="caption"> <center><h6 style="font-weight:300;">'+tmp[0]+'</h6> <p><small>'+tmp[1]+'</small></p></center> </div> </div> </div>';
                     j = 0;
                 }
                 else
                 {
-                    cont = cont + '<div class="col-md-3"> <div class="thumbnail wow zoomIn"> <img src="http://www.gravatar.com/avatar/'+tmp[2]+'?s=150" class="img-circle" alt="'+tmp[0]+'"> <div class="caption"> <center><h6>'+tmp[0]+'</h6> <p><small>'+tmp[1]+'</small></p></center> </div> </div> </div>';
+                    cont = cont + '<div class="col-md-3"> <div class="thumbnail wow zoomIn" style="font-weight:300;"> <img src="http://www.gravatar.com/avatar/'+tmp[2]+'?s=150" class="img-circle" alt="'+tmp[0]+'"> <div class="caption"> <center><h6 style="font-weight:300;">'+tmp[0]+'</h6> <p><small>'+tmp[1]+'</small></p></center> </div> </div> </div>';
                     j = j + 1;
                 }
                 i = i + 1;
