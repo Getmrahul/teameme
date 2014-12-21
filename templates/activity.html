@@ -124,11 +124,20 @@
 
     <div class="container">
         <div class="row">
-            <center><h4 style="font-weight:300;">{{session["tname"]}} Members</h4><hr></center>
+            <center><h4 style="font-weight:300;">{{session["tname"]}} Activity Graph</h4><hr></center>
         </div>
 
         <div id="ml">
-
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <canvas id="act-chart" width="500" height="500"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="act-tags" style="text-align:center;">
+                </div>
+            </div>
         </div>
     </div>
     <!-- /.container -->
@@ -140,38 +149,34 @@
     <script src="/static/js/vendor/video.js"></script>
     <script src="/static/js/flat-ui.min.js"></script>
     <script src="/static/js/wow.min.js"></script>
-    
+    <script src="/static/js/charts.js"></script>
     <script>
     $(window).load(function() {
         $('.load').fadeOut("slow");
         $('#anim_nav').addClass('animated bounceInDown');
     });
-
+    var result_data = [];
     $(document).ready(function(){
         new WOW().init();
-        $('#ml').html('<div class="loader">Loading...</div><center><p>Your awesome team is getting ready!</p></center>');
-        $.getJSON( "/tm", function(response) {
+        //$('#ml').html('<div class="loader">Loading...</div><center><p>Analyzing great minds at work!</p></center>');
+        $.getJSON( "/insight", function(response) {
             var data = response.data;
             var i = 0;
-            var j = 0;
-            var cont = '<div class="row">';
-            while(i<data.length)
+
+            while (i<data[0].length)
             {
-                var tmp = data[i].split("-_-");
-                if (j>4)
-                {
-                    cont = cont + '</div><div class="row"><div class="col-md-3"> <div class="thumbnail wow zoomIn" style="font-weight:300;"> <img src="http://www.gravatar.com/avatar/'+tmp[2]+'?s=150" class="img-circle" alt="'+tmp[0]+'"> <div class="caption"> <center><h6 style="font-weight:300;">'+tmp[0]+'</h6> <p><small>'+tmp[1]+'</small></p></center> </div> </div> </div>';
-                    j = 0;
-                }
-                else
-                {
-                    cont = cont + '<div class="col-md-3"> <div class="thumbnail wow zoomIn" style="font-weight:300;"> <img src="http://www.gravatar.com/avatar/'+tmp[2]+'?s=150" class="img-circle" alt="'+tmp[0]+'"> <div class="caption"> <center><h6 style="font-weight:300;">'+tmp[0]+'</h6> <p><small>'+tmp[1]+'</small></p></center> </div> </div> </div>';
-                    j = j + 1;
-                }
+                result_data.push('{value: '+data[0][i]["count"]+', color:"#F7464A", highlight: "#FF5A5E", label: "'+data[0][i]["name"]+'"}');
                 i = i + 1;
             }
-            $('#ml').html(cont);
+
         });
+        var result_data = {{r}}.replace("&#34;", "\"");
+        console.log(result_data);
+        window.onload = function(){
+            var ctx = document.getElementById("act-chart").getContext("2d");
+            window.myDoughnut = new Chart(ctx).Doughnut(result_data, {responsive : true});
+            $('#act-tags').html('<font style="color:#F7464A">iPhone</font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#46BFBD">Nexus</font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#FDB45C">Laptop</font>&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:#949FB1">Canvas A1</font>');
+        };
     });
     </script>
   </body>
