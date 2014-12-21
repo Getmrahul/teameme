@@ -12,6 +12,7 @@ import db
 import re
 from datetime import datetime
 import pretty
+import random
 
 #App Settings
 app = Flask(__name__)
@@ -105,7 +106,8 @@ def create():
 def home():
     if 'auth' not in session:
         return redirect(url_for('index'))
-    return render_template('home.html')
+    greet = ['Have a good day! ','See what\'s your team is upto!', 'Cheers, your progress is ticking!', 'Leave your team at peace!', 'Enhance your team\'s success!']
+    return render_template('home.html', greet = random.choice (greet))
 
 @app.route('/feed')
 def feed():
