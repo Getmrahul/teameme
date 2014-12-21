@@ -4469,8 +4469,8 @@ select[multiple].navbar-form .select2-search input[type="text"] {
 .navbar-default .navbar-nav > .open > a .caret,
 .navbar-default .navbar-nav > .open > a:hover .caret,
 .navbar-default .navbar-nav > .open > a:focus .caret {
-  border-top-color: #1abc9c;
-  border-bottom-color: #1abc9c;
+  border-top-color: white;
+  border-bottom-color: white;
   }
 @media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a {

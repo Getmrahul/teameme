@@ -13,6 +13,7 @@ import re
 from datetime import datetime
 import pretty
 import random
+import hashlib
 
 #App Settings
 app = Flask(__name__)
@@ -186,6 +187,29 @@ def feed():
     return resp
 
 @app.route('/team')
+def team():
+    if "auth" not in session:
+        return redirect(url_for('index'))
+    return render_template('team.html')
+
+@app.route('/tm')
+def teamMembers():
+    response = urllib2.urlopen('https://slack.com/api/users.list?token='+session["auth"])
+    data = json.load(response)
+    i = 0
+    d = []
+    while i < len(data["members"]):
+        email = data["members"][i]["profile"]["email"]
+        name = data["members"][i]["name"].capitalize()
+        h = hashlib.new("md5")
+        h.update(email)
+        q = h.hexdigest()
+        d.append(name+'-_-'+email+'-_-'+q)
+        i = i + 1
+    data = {"data": d}
+    js = json.dumps(data)
+    resp = Response(js, status = 200, mimetype = 'application/json')
+    return resp
 
 @app.route('/logout')
 def logout():

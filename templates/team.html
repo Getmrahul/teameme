@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{{session["tname"]}} Members - TeaMem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="/static/css/vendor/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="/static/css/flat-ui.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700,900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700' rel='stylesheet' type='text/css'>
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/css/animate.css">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="/static/js/vendor/html5shiv.js"></script>
+      <script src="/static/js/vendor/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            padding-top: 70px;
+        }
+
+        .loader,
+        .loader:before,
+        .loader:after {
+            background: #32b38c;
+            -webkit-animation: load1 1s infinite ease-in-out;
+            animation: load1 1s infinite ease-in-out;
+            width: 1em;
+            height: 4em;
+        }
+        .loader:before,
+        .loader:after {
+            position: absolute;
+            top: 0;
+            content: '';
+        }
+        .loader:before {
+            left: -1.5em;
+        }
+        .loader {
+            text-indent: -9999em;
+            margin: 8em auto;
+            position: relative;
+            font-size: 11px;
+            -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s;
+        }
+        .loader:after {
+            left: 1.5em;
+            -webkit-animation-delay: -0.32s;
+            animation-delay: -0.32s;
+        }
+        @-webkit-keyframes load1 {
+            0%,
+            80%,
+            100% {
+                box-shadow: 0 0 #32b38c;
+                height: 4em;
+            }
+            40% {
+                box-shadow: 0 -2em #32b38c;
+                height: 5em;
+            }
+        }
+        @keyframes load1 {
+            0%,
+            80%,
+            100% {
+                box-shadow: 0 0 #32b38c;
+                height: 4em;
+            }
+            40% {
+                box-shadow: 0 -2em #32b38c;
+                height: 5em;
+            }
+        }
+        .thumbnail {
+            border: 2px solid #bdc3c7;
+            cursor: pointer;
+        }
+        .thumbnail:hover {
+            border: 2px solid #1abc9c;
+            -webkit-animation: hue 30s infinite linear;
+        }
+
+    </style>
+  </head>
+  <body>
+    <!-- loader -->
+    <div class="load">
+        <div class="load_cont"><center><div class="contener_general"> <div class="contener_mixte"><div class="ballcolor ball_1">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_2">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_3">&nbsp;</div></div> <div class="contener_mixte"><div class="ballcolor ball_4">&nbsp;</div></div> </div><div style="display:none;" id="upload-greet">Signing in</div></center></div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-top " style="box-shadow: 0 3px 2px -2px rgba(8, 8, 8, 0.3);" id="anim_nav" role="navigation">
+        <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" style="color:white;font-family: 'Raleway', sans-serif;" href="#">TeaMem</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-01">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" style="color:white;font-weight:500;" data-toggle="dropdown" role="button" aria-expanded="false">Hey {{session["uname"]}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/home"><i class="fa fa-home"></i> Home</a></li>
+                        <li class="active"><a href="/team"><i class="fa fa-users"></i> Team</a></li>
+                        <li><a href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div>
+    </nav><!-- /navbar -->
+
+    <div class="container">
+        <div class="row">
+            <center><h4>{{session["tname"]}} Members</h4><hr></center>
+        </div>
+
+        <div id="ml">
+
+        </div>
+    </div>
+    <!-- /.container -->
+    <input id="cl" type="hidden" value="{{session['channels']}}">
+
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="/static/js/vendor/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/js/vendor/video.js"></script>
+    <script src="/static/js/flat-ui.min.js"></script>
+    <script src="/static/js/wow.min.js"></script>
+    <script>
+    $(window).load(function() {
+        $('.load').fadeOut("slow");
+        $('#anim_nav').addClass('animated bounceInDown');
+    });
+
+    $(document).ready(function(){
+        new WOW().init();
+        $('#ml').html('<div class="loader">Loading...</div><center><p>Your awesome team is getting ready!</p></center>');
+        $.getJSON( "/tm", function(response) {
+            var data = response.data;
+            var i = 0;
+            var j = 0;
+            var cont = '<div class="row">';
+            while(i<data.length)
+            {
+                var tmp = data[i].split("-_-");
+                if (j>4)
+                {
+                    cont = cont + '</div><div class="row"><div class="col-md-3"> <div class="thumbnail wow zoomIn"> <img src="http://www.gravatar.com/avatar/'+tmp[2]+'?s=150" class="img-circle" alt="'+tmp[0]+'"> <div class="caption"> <center><h6>'+tmp[0]+'</h6> <p><small>'+tmp[1]+'</small></p></center> </div> </div> </div>';
+                    j = 0;
+                }
+                else
+                {
+                    cont = cont + '<div class="col-md-3"> <div class="thumbnail wow zoomIn"> <img src="http://www.gravatar.com/avatar/'+tmp[2]+'?s=150" class="img-circle" alt="'+tmp[0]+'"> <div class="caption"> <center><h6>'+tmp[0]+'</h6> <p><small>'+tmp[1]+'</small></p></center> </div> </div> </div>';
+                    j = j + 1;
+                }
+                i = i + 1;
+            }
+            $('#ml').html(cont);
+        });
+    });
+    </script>
+  </body>
+</html>
