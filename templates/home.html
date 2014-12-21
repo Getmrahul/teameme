@@ -301,7 +301,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" style="color:white;" data-toggle="dropdown" role="button" aria-expanded="false">Hey {{session["uname"]}} <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Team</a></li>
+                        <li><a href="/team">Team</a></li>
                         <li><a href="/logout">Logout</a></li>
                     </ul>
                 </li>
@@ -312,7 +312,7 @@
 
     <div class="container">
         <div> <!-- class="page-header" -->
-            <h4 id="timeline">{{session['tname']}} Timeline</h4>
+            <h4 id="timeline">{{session['tname']}} Timeline <small>Have a good day!</small></h4>
             <hr>
         </div>
         <div  id="timeline_ul">
@@ -327,6 +327,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/static/js/vendor/video.js"></script>
     <script src="/static/js/flat-ui.min.js"></script>
+    <script src="/static/js/wow.min.js"></script>
     <script>
     $(window).load(function() {
         $('.load').fadeOut("slow");
@@ -334,6 +335,7 @@
     });
 
     $(document).ready(function(){
+        new WOW().init();
         $('#timeline_ul').html('<div class="loader">Loading...</div><center><p>Checking what people are doing!</p></center>');
         var ch = $('#cl').val();
         var tl = ''
@@ -353,21 +355,21 @@
                     if (i%2==0)
                     {
                         if(data[i]["text"] != data[i]["pretext"]){
-                        tl = tl + '<li> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body" style="overflow:hidden;"> <p>'+data[i]["pretext"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div> </div> </li>';
+                        tl = tl + '<li class="row wow bounceInUp"> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body" style="overflow:hidden;"> <p>'+data[i]["pretext"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div> </div> </li>';
                         }
                         else
                         {
-                            tl = tl + '<li> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div></div> </li>';
+                            tl = tl + '<li class="row wow bounceInUp"> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div></div> </li>';
                         }
                     }
                     else
                     {
                         if(data[i]["text"] != data[i]["pretext"]){
-                            tl = tl + '<li class="timeline-inverted" > <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body" style="overflow:hidden;"> <p>'+data[i]["pretext"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div> </div> </li>';
+                            tl = tl + '<li class="timeline-inverted row wow bounceInUp" > <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'</p> </div> <div class="timeline-body" style="overflow:hidden;"> <p>'+data[i]["pretext"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div> </div> </li>';
                         }
                         else
                         {
-                            tl = tl + '<li class="timeline-inverted"> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div></div> </li>';
+                            tl = tl + '<li class="timeline-inverted row wow bounceInUp"> <div class="timeline-badge '+data[i]["color"]+'" style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="'+data[i]["fcn"]+'">'+data[i]["cn"]+'</div> <div class="timeline-panel"> <div class="timeline-heading" style="overflow:hidden;"> <p class="timeline-title lead" style="font-size:22px;font-weight:500;">'+data[i]["text"]+'<p class="pull-right"><small>'+data[i]["tsd"]+'</small></p></p> </div></div> </li>';
                         }
                     }
                     i = i + 1;

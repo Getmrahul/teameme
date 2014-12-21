@@ -154,6 +154,22 @@ def feed():
                     pretext = pretext.replace('<'+matches[k]+'>',code)
                     k = k + 1
                 feed.append({"ts":float(ts), "text": text, "pretext": pretext, "cn": cn, "fcn": tmp[1].capitalize(), "color": color, "tsd":timeinfo})
+            else:
+                ts = data["messages"][j]["ts"]
+                dt = datetime.utcfromtimestamp(float(ts))
+                timeinfo = pretty.date(dt)
+                text = data["messages"][j]["text"]
+                matches = re.findall(r'\<(.+?)\>',text)
+                k = 0
+                while k < len(matches):
+                    tag = matches[k].split("|")
+                    try:
+                        code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[1]+"</a>"
+                    except Exception:
+                        code = "<a href=\""+tag[0]+"\" target=\"_blank\">"+tag[0]+"</a>"
+                    text = text.replace('<'+matches[k]+'>',code)
+                    k = k + 1
+                feed.append({"ts":float(ts), "text": text, "pretext": text, "cn": cn, "fcn": tmp[1].capitalize(), "color": color, "tsd":timeinfo})
             j = j + 1
         i = i + 1
     if not feed:
@@ -166,6 +182,8 @@ def feed():
     js = json.dumps(data)
     resp = Response(js, status = 200, mimetype = 'application/json')
     return resp
+
+@app.route('/team')
 
 @app.route('/logout')
 def logout():
