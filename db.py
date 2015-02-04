@@ -9,7 +9,7 @@ import os
 import urlparse
 
 urlparse.uses_netloc.append('postgres')
-url = urlparse.urlparse(os.environ.get('DATABASE_URL',"postgres://enkevrkibgxpfp:cCpqG0akP8w7veNWu3wqDW_t-F@ec2-54-235-76-206.compute-1.amazonaws.com:5432/d41m8qhb50vvd4"))
+url = urlparse.urlparse(os.environ.get('DATABASE_URL',"postgres://ffacaaweoqarze:ba6IdmLt9Y--3UkySef--pWnSb@ec2-54-235-76-206.compute-1.amazonaws.com:5432/de15c416bbdcib"))
 
 det = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 
