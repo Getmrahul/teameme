@@ -38,9 +38,9 @@ def auth():
     if 'auth' in session:
         return redirect(url_for('home'))
     code = request.args.get('code')
-    response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
-    data = json.load(response)
-    return data
+    #response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
+    #data = json.load(response)
+    return code
     auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
     response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
     data = json.load(response)
