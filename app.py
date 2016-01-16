@@ -18,8 +18,8 @@ import hashlib
 #App Settings
 app = Flask(__name__)
 app.secret_key = os.urandom(25)
-slack_id = '3259978903.3264616612'
-slack_sec = '0387e1dc50dd6e816d855270bdadb339'
+slack_id = '****'
+slack_sec = '****'
 db_obj = db.db()
 
 #Routes
@@ -41,7 +41,7 @@ def auth():
     #response = urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec)
     #data = json.load(response)
     data = json.loads(urllib2.urlopen('https://slack.com/api/oauth.access?code='+code+'&client_id='+slack_id+'&client_secret='+slack_sec).read())
-    auth_code = data["access_token"]#'xoxp-3259978903-3259978905-3263464205-9e2605'#data["access_token"].encode('utf-8')
+    auth_code = data["access_token"]
     response = urllib2.urlopen('https://slack.com/api/auth.test?token='+auth_code)
     data = json.load(response)
     tid = data["team_id"]
